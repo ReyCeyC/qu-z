@@ -33,7 +33,7 @@ def generate_quiz(topic):
        Cevap: B
     """
     response = openai.chat.completions.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": prompt}]
     )
     return response.choices[0].message.content
@@ -43,9 +43,12 @@ if st.button("Quiz Oluştur"):
         st.warning("Lütfen bir konu girin.")
     else:
         with st.spinner("Sorular oluşturuluyor..."):
-            quiz_text = generate_quiz(topic)
-            st.success("Quiz hazır!")
-            st.text_area("Sorular", quiz_text, height=350)
+            try:
+                quiz_text = generate_quiz(topic)
+                st.success("Quiz hazır!")
+                st.text_area("Sorular", quiz_text, height=350)
+            except openai.error.OpenAIError as e:
+                st.error(f"API hatası: {e}")
 
 st.markdown("---")
 st.caption("Developed with ❤️ using Streamlit and OpenAI GPT-4")
