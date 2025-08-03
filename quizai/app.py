@@ -18,21 +18,21 @@ topic = st.text_input("Konu Başlığı Girin (örn. Osmanlı Tarihi, Python De�
 
 def generate_quiz(topic):
     prompt = f"""
-    Konu: {topic}
-    Bu konuyla ilgili 5 adet çoktan seçmeli soru oluştur.
-    Her soru için:
-    - Soru metni
-    - 4 şık (A, B, C, D)
-    - Doğru cevabın harfi (yalnızca harf)
-    Format:
+Konu: {topic}
+Bu konuyla ilgili 5 adet çoktan seçmeli soru oluştur.
+Her soru için:
+- Soru metni
+- 4 şık (A, B, C, D)
+- Doğru cevabın harfi (yalnızca harf)
+Format:
 
-    1. Soru: ...
-       A) ...
-       B) ...
-       C) ...
-       D) ...
-       Cevap: B
-    """
+1. Soru: ...
+   A) ...
+   B) ...
+   C) ...
+   D) ...
+   Cevap: B
+"""
     response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": prompt}]
