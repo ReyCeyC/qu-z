@@ -3,11 +3,9 @@ import openai
 from dotenv import load_dotenv
 import os
 
-
 st.set_page_config(page_title="QuizAI", layout="centered")
 
 load_dotenv()
-
 
 api_key = os.getenv("OPENAI_API_KEY")
 openai.api_key = api_key
@@ -15,9 +13,7 @@ openai.api_key = api_key
 st.title("🧠 QuizAI - Otomatik Quiz Oluşturucu")
 st.write("Yapay zeka ile otomatik çoktan seçmeli test soruları üretin!")
 
-
 topic = st.text_input("Konu Başlığı Girin (örn. Osmanlı Tarihi, Python Değişkenler):")
-
 
 def generate_quiz(topic):
     prompt = f"""
@@ -36,12 +32,11 @@ def generate_quiz(topic):
        D) ...
        Cevap: B
     """
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model="gpt-4",
         messages=[{"role": "user", "content": prompt}]
     )
-    return response['choices'][0]['message']['content']
-
+    return response.choices[0].message.content
 
 if st.button("Quiz Oluştur"):
     if topic.strip() == "":
@@ -51,7 +46,6 @@ if st.button("Quiz Oluştur"):
             quiz_text = generate_quiz(topic)
             st.success("Quiz hazır!")
             st.text_area("Sorular", quiz_text, height=350)
-
 
 st.markdown("---")
 st.caption("Developed with ❤️ using Streamlit and OpenAI GPT-4")
