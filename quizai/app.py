@@ -2,6 +2,7 @@ import streamlit as st
 import openai
 from dotenv import load_dotenv
 import os
+from openai.error import OpenAIError
 
 st.set_page_config(page_title="QuizAI", layout="centered")
 
@@ -47,7 +48,7 @@ if st.button("Quiz Oluştur"):
                 quiz_text = generate_quiz(topic)
                 st.success("Quiz hazır!")
                 st.text_area("Sorular", quiz_text, height=350)
-            except openai.error.OpenAIError as e:
+            except OpenAIError as e:
                 st.error(f"API hatası: {e}")
 
 st.markdown("---")
